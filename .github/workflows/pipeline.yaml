@@ -15,6 +15,10 @@ jobs:
     runs-on: self-hosted
 
     steps:
+      - name: 'Cleanup build folder'
+        run: rm -Recurse ${{github.workspace}}\*
+
+
       - name: Set up Repository 
         uses: actions/checkout@v4
         with:
@@ -49,9 +53,6 @@ jobs:
 
 
 
-      - name: Clear Workspace
-        uses: AutoModality/action-clean@v1
-
 
 
       
@@ -60,6 +61,9 @@ jobs:
     needs: build
 
     steps:
+
+      - name: 'Cleanup build folder'
+        run: rm -Recurse ${{github.workspace}}\*
 
       - name: Check out my other private repo
         uses: actions/checkout@master
@@ -79,8 +83,7 @@ jobs:
           git push 
 
 
-      - name: Clear Workspace
-        uses: AutoModality/action-clean@v1
+     
 
 
 
