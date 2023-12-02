@@ -16,11 +16,7 @@ jobs:
 
     steps:
       - name: 'Cleanup build folder'
-        run: |
-          ls -la ./
-          rm -rf ./* || true
-          rm -rf ./.??* || true
-          ls -la ./
+        uses: AutoModality/action-clean@v1
 
 
 
@@ -68,13 +64,9 @@ jobs:
     steps:
 
       - name: 'Cleanup build folder'
-        run: |
-          ls -la ./
-          rm -rf ./* || true
-          rm -rf ./.??* || true
-          ls -la ./
+        uses: AutoModality/action-clean@v1
 
-          
+
 
       - name: Check out my other private repo
         uses: actions/checkout@master
