@@ -39,7 +39,7 @@ jobs:
 
       - name: Image build 
         run: |
-          docker build -t inderharrysingh/github-eks .
+          docker build -t inderharrysingh/github-eks:${{  github.sha }} .
           docker login -u inderharrysingh -p ${{ secrets.PASS }}
           docker push inderharrysingh/github-eks 
 
@@ -47,16 +47,29 @@ jobs:
       - name: Image Scan
         run: trivy image  inderharrysingh/github-eks > image-analysis.txt
 
-  
-  # deploy:
-  #   needs: build 
-  #   runs-on: self-hosted
-  #   steps:
+
       
+  deploy:
+    runs-on: self-hosted
 
-              
+    steps:
 
+      - name: Check out my other private repo
+        uses: actions/checkout@master
+        with:
+          repository: inderharrysingh/eks-image
+          token: ${{ secrets.EXTERNAL_PASS }}
 
+      
+      - name:  Chaging image
+        run: sed -i 's/inderharrysingh\/eks-image:.*/inderharrysingh\/eks-image:${{ github.sha }}/' deployment.yaml
+
+    
+      - name: Pushing changes 
+        run: |
+          git add .
+          git commit -m "updated image in response to ${{ github.sha }}"
+          git push 
 
 
 
