@@ -1,0 +1,87 @@
+name: gihub-pipeline
+
+
+on:
+  push:
+    branches:
+      - "main"
+
+
+
+# trivy, docker installed , sonar container + token  
+# set up secrets in thre repository and set up the runner 
+# 
+
+
+jobs:
+
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - name: Set up Repository 
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+
+      - name: Installing depedencies
+        run: npm install
+
+
+      - name: Sonar qube code analysis 
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+
+      - name: File Scan
+        run: trivy fs . >  filesystem-analysis.txt
+
+
+      - name: Image build 
+        run: |
+          docker build -t inderharrysingh/github-eks .
+          docker login -u inderharrysingh -p ${{ secrets.PASS }}
+          docker push inderharrsingh/github-eks 
+
+
+      - name: Image Scan
+        run: trivy image  inderharrsingh/github-eks > image-analysis.txt
+
+  
+  # deploy:
+  #   needs: build 
+  #   runs-on: self-hosted
+  #   steps:
+      
+
+# need to push to the repo , and have to set up argo cd to track that git repo 
+    
+
+   
+
+
+
+
+              
+
+
+
+
+
+  
+
+
+  
+
+      
+    
+
+
+  
+
+      
+  
+
