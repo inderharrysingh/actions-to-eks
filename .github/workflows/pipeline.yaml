@@ -26,11 +26,12 @@ jobs:
 
 
       - name: Sonar qube code analysis 
-        uses: sonarsource/sonarqube-scan-action@master
-        env:
-         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-
+        uses: kitabisa/sonarqube-action@master
+        with:
+          host: ${{ secrets.SONAR_HOST_URL }}
+          login: ${{ secrets.SONAR_TOKEN }}
+          projectKey: "github-eks"
+        
 
       - name: File Scan
         run: trivy fs . >  filesystem-analysis.txt
