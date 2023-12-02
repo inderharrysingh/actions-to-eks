@@ -48,6 +48,12 @@ jobs:
         run: trivy image  inderharrysingh/github-eks 
 
 
+
+      - name: Clear Workspace
+        uses: AutoModality/action-clean@v1
+
+
+
       
   deploy:
     runs-on: self-hosted
