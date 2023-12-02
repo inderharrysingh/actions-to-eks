@@ -34,7 +34,7 @@ jobs:
         
 
       - name: File Scan
-        run: trivy fs . >  filesystem-analysis.txt
+        run: trivy fs .
 
 
       - name: Image build 
@@ -45,7 +45,7 @@ jobs:
 
 
       - name: Image Scan
-        run: trivy image  inderharrysingh/github-eks > image-analysis.txt
+        run: trivy image  inderharrysingh/github-eks 
 
 
       
