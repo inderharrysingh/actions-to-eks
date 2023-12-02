@@ -8,10 +8,6 @@ on:
 
 
 
-# trivy, docker installed , sonar container + token  
-# set up secrets in thre repository and set up the runner 
-# 
-
 
 jobs:
 
@@ -44,11 +40,11 @@ jobs:
         run: |
           docker build -t inderharrysingh/github-eks .
           docker login -u inderharrysingh -p ${{ secrets.PASS }}
-          docker push inderharrsingh/github-eks 
+          docker push inderharrysingh/github-eks 
 
 
       - name: Image Scan
-        run: trivy image  inderharrsingh/github-eks > image-analysis.txt
+        run: trivy image  inderharrysingh/github-eks > image-analysis.txt
 
   
   # deploy:
@@ -56,14 +52,6 @@ jobs:
   #   runs-on: self-hosted
   #   steps:
       
-
-# need to push to the repo , and have to set up argo cd to track that git repo 
-    
-
-   
-
-
-
 
               
 
