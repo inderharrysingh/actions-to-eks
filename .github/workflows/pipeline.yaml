@@ -79,6 +79,10 @@ jobs:
           git push 
 
 
+      - name: Clear Workspace
+        uses: AutoModality/action-clean@v1
+
+
 
   
 
